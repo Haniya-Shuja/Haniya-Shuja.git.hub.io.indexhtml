@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Condition Checking If Else</title>
+</head>
+<body>
+    
+    <!-- <h1>Es6 Condition Checking With If Else</h1> -->
+
+    <h1>ATM Machine</h1>
+    <hr>
+    <form onsubmit="checkPin(); return false">
+
+       <P><B>Enter Your Pin: <input type="number" id="userInputPin" required><button>Confirm</button></B></P>
+
+    </form>
+
+    <h4 id="errorMessage"> </h4>
+    <p id="HomeScreen"></p>
+    <p id="InSufficientAmount"></p>
+    <h1> Money Box <span id="moneyBox">30000</span></h1>
+    <h1> Card Daily Limit <span id="cardDailyLimit">20000</span></h1>
+    <h1> Account Balance <span id="accountBalance">50000</span></h1>
+    <h3 id="withDraw"></h3>
+    
+    <script>
+        let moneyBox = 30000;
+        let cardDailyLimit = 35000;
+        let accountBalance = 50000;
+        
+
+        function checkPin() {
+      console.log("I Am Checking Pin");
+    
+     let userInputPin = document.querySelector("#userInputPin").value;
+
+     if (userInputPin.length < 4) {
+        document.querySelector("#errorMessage").innerHTML = `You Must Enter 4 Digit Pin Number`;
+        return;
+    }
+    if (userInputPin.length > 4) {
+        document.querySelector("#errorMessage").innerHTML = `You Must Enter 4 Digit Pin Number`;
+        return;
+    }
+            if (userInputPin === "1999") {
+                document.querySelector("#errorMessage").innerHTML = `Correct Pin Number ✅`;
+
+                document.querySelector("#HomeScreen").innerHTML = `
+                
+                <form onsubmit="withDraw(); return false">
+                <label> Amount Enter: </label> <input type="number" id="userInputAmount" required>
+                    <button>WithDraw</button>
+                </form>
+                `
+                return true;
+            }
+            if (userInputPin !== "1999") {
+                document.querySelector("#errorMessage").innerHTML = `Incorrect Pin Number ❌`;
+                return;
+            }
+        }
+        function withDraw() {
+            console.log ("withDraw");
+
+            let userInputAmount = document.querySelector("#userInputAmount").value;
+
+            if (userInputAmount > moneyBox) {
+                   document.querySelector("#InSufficientAmount").innerHTML = `This Machine Does'nt Have Enough Money, Please Try Smaller Amount ❌`;
+                return false;
+                }
+
+               else if (userInputAmount > cardDailyLimit) {
+                    document.querySelector("#InSufficientAmount").innerHTML = `You Are Exceeding Your Daily Limit ❌`;
+                return false;
+                }
+                else if (userInputAmount < 500) {
+                    document.querySelector("#InSufficientAmount").innerHTML = `You Can't Put Amount Less Than 500`;
+                    return false;
+                }
+                else if (userInputAmount % 500) {
+                    document.querySelector("#InSufficientAmount").innerHTML = `Please Input Amount 500 Or Multiple Of 500`;
+                    return false;
+                }
+
+                else if (userInputAmount > accountBalance) {
+                    document.querySelector("#InSufficientAmount").innerHTML = `Your Account Balance Is Under Your Giving Value ❌`;
+                return false; 
+                }
+
+
+             else {
+
+                console.log("moneyBox, cardDailyLimit, accountBalance");
+
+                document.querySelector("#InSufficientAmount").innerHTML = `Transaction Processed Successfully`;
+
+                moneyBox = moneyBox - Number(userInputAmount);
+                cardDailyLimit = cardDailyLimit - Number(userInputAmount);
+                accountBalance = accountBalance - Number(userInputAmount);
+
+                document.getElementById("moneyBox").innerHTML = moneyBox;
+                document.getElementById("cardDailyLimit").innerHTML = cardDailyLimit;
+                document.getElementById("accountBalance").innerHTML = accountBalance;
+                return true;
+            }
+                                
+                // moneyBox = document.querySelector("moneyBox").value;
+                // cardDailyLimit = document.querySelector("cardDailyLimit").value;
+                // accountBalance = document.querySelector ("accountBalance").value;
+                
+             
+            // moneyBox= Number(moneyBox);
+            // cardDailyLimit= Number(cardDailyLimit);
+            // accountBalace= Number (accountBalace);
+
+            // let differenceResult = userInputAmount - moneyBox;
+            // differenceResult = userInputAmount - cardDailyLimit;
+            // differenceResult = userInputAmount - accountBalace;
+
+            // console.log("differenceResult is " + differenceResult);
+
+            // document.querySelector("WithDraw").innerHTML = differenceResult;
+            
+        }
+                                 
+    </script>
+</body>
+</html>
